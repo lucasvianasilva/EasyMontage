@@ -58,6 +58,9 @@ easymontage/
 ├── requirements.txt         # Dependências do projeto
 ├── montagens_pequenas.json  # Banco de dados local para persistência das montagens
 └── README.md                # Documentação do projeto
+```
 
-👨‍💻 Autor
+---
+
+## 👨‍💻 Autor
 Desenvolvido exclusivamente por Lucas Viana.
