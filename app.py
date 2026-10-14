@@ -68,7 +68,6 @@ if "editando_id" not in st.session_state:
 # 1. MENU LATERAL E TEMA (DEFINIDOS ANTES DO CSS)
 # ==========================================
 
-# TÍTULO DA SIDEBAR (Pode alterar o valor de font-size aqui, ex: 28px)
 st.sidebar.markdown("<div style='font-size: 28px; font-weight: bold;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
 st.sidebar.divider()
 
@@ -177,7 +176,7 @@ def calcular_corte_azul(tamanho_alvo, folga_azul):
     return passos, sobra
 
 # ==========================================
-# 3. DESIGN SYSTEM & CSS
+# 3. DESIGN SYSTEM & CSS (COM CORREÇÃO DE IMPRESSÃO)
 # ==========================================
 
 css_geral = f"""
@@ -366,10 +365,13 @@ css_geral = f"""
             color: #000000 !important;
             font-weight: 600 !important;
             font-size: 12pt !important;
+            opacity: 1 !important;
+            visibility: visible !important;
         }}
         
         .box-vermelha .texto-destacado, .box-azul .texto-destacado {{
             font-size: 12pt !important;
+            color: #000000 !important;
         }}
         
         div[data-testid="stHorizontalBlock"] {{ 
