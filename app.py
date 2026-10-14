@@ -176,7 +176,7 @@ def calcular_corte_azul(tamanho_alvo, folga_azul):
     return passos, sobra
 
 # ==========================================
-# 3. DESIGN SYSTEM & CSS (COM CORREÇÃO DE IMPRESSÃO ROBUSTA)
+# 3. DESIGN SYSTEM & CSS (CORREÇÃO DEFINITIVA DE IMPRESSÃO)
 # ==========================================
 
 css_geral = f"""
@@ -227,6 +227,18 @@ css_geral = f"""
     h2 {{ font-size: 28px !important; font-weight: bold !important; color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important; }}
     h3 {{ font-size: 26px !important; font-weight: bold !important; color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important; }}
     h4 {{ font-size: 20px !important; font-weight: bold !important; color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important; }}
+
+    .titulo-vermelho {{
+        color: {'#F87171' if tema_escuro else '#EF4444'} !important;
+        font-size: 26px !important;
+        font-weight: bold !important;
+    }}
+
+    .titulo-azul {{
+        color: {'#60A5FA' if tema_escuro else '#3B82F6'} !important;
+        font-size: 26px !important;
+        font-weight: bold !important;
+    }}
 
     [data-testid="stVerticalBlockBorderWrapper"], [data-testid="stForm"] {{
         border: none !important;
@@ -328,8 +340,8 @@ css_geral = f"""
         *, html, body, [data-testid="stAppViewContainer"], .main, div, p, span, label, h1, h2, h3, h4, h5, h6, strong, em, li, .stMarkdown, .stText, [data-testid="stMarkdownContainer"] {{
             background-color: #FFFFFF !important; 
             color: #000000 !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+            -webkit-print-color-adjust: unset !important;
+            print-color-adjust: unset !important;
             opacity: 1 !important;
             visibility: visible !important;
             text-shadow: none !important;
@@ -344,10 +356,18 @@ css_geral = f"""
             margin: 0 !important;
         }}
 
-        h2 {{ font-size: 12pt !important; margin: 3px 0 !important; font-weight: bold !important; color: #000000 !important; }}
-        h3 {{ font-size: 12pt !important; margin: 3px 0 !important; font-weight: bold !important; color: #000000 !important; }}
+        h2, h3, h4, .titulo-vermelho, .titulo-azul {{
+            color: #000000 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            -webkit-print-color-adjust: unset !important;
+            print-color-adjust: unset !important;
+        }}
+
+        h2 {{ font-size: 14pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
+        h3, .titulo-vermelho, .titulo-azul {{ font-size: 13pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
         h4 {{ font-size: 12pt !important; margin: 2px 0 !important; font-weight: bold !important; color: #000000 !important; }}
-        p, span, li, [data-testid="stMarkdownContainer"] p {{ font-size: 15pt !important; line-height: 1.25 !important; margin-bottom: 2px !important; color: #000000 !important; }}
+        p, span, li, [data-testid="stMarkdownContainer"] p {{ font-size: 12pt !important; line-height: 1.25 !important; margin-bottom: 2px !important; color: #000000 !important; }}
 
         .box-vermelha, .box-azul {{
             background-color: #FFFFFF !important; 
@@ -366,11 +386,11 @@ css_geral = f"""
         .box-vermelha .caixa-item, .box-azul .caixa-item {{
             color: #000000 !important;
             font-weight: 600 !important;
-            font-size: 12pt !important;
+            font-size: 11pt !important;
             opacity: 1 !important;
             visibility: visible !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+            -webkit-print-color-adjust: unset !important;
+            print-color-adjust: unset !important;
         }}
         
         div[data-testid="stHorizontalBlock"] {{ 
@@ -487,7 +507,7 @@ if menu_selecionado == "Calculadora Principal":
             
             col_verm, col_azul = st.columns(2)
             with col_verm:
-                st.markdown("<h3 style='color: #EF4444;'>🔴 CORTE VERMELHO</h3>", unsafe_allow_html=True)
+                st.markdown("<div class='titulo-vermelho'>🔴 CORTE VERMELHO</div>", unsafe_allow_html=True)
                 renderizar_caixa("Jogo Inicial", res_vermelho['etapa1'], "vermelho")
                 renderizar_caixa("Kits de Preenchimento", res_vermelho['etapa2'], "vermelho")
                 renderizar_caixa("Peças menores", res_vermelho['etapa3_fill'], "vermelho")
@@ -496,7 +516,7 @@ if menu_selecionado == "Calculadora Principal":
                     st.warning(f"Sobra isolada de {sobra_verm}mm ")
 
             with col_azul:
-                st.markdown("<h3 style='color: #3B82F6;'>🔵 CORTE AZUL</h3>", unsafe_allow_html=True)
+                st.markdown("<div class='titulo-azul'>🔵 CORTE AZUL</div>", unsafe_allow_html=True)
                 renderizar_caixa("Jogo Inicial", res_azul['etapa1'], "azul")
                 renderizar_caixa("Kits de Preenchimento", res_azul['etapa2'], "azul")
                 renderizar_caixa("Peças menores", res_azul['etapa3_fill'], "azul")
@@ -575,7 +595,7 @@ elif menu_selecionado == "Montagens Salvas":
         
         col_v, col_a = st.columns(2)
         with col_v:
-            st.markdown("<h4 style='color: #EF4444;'>🔴 Corte Vermelho</h4>", unsafe_allow_html=True)
+            st.markdown("<div class='titulo-vermelho'>🔴 Corte Vermelho</div>", unsafe_allow_html=True)
             html_verm = f'<div class="box-vermelha"><ul>'
             for peca in m.get('pecas_vermelho', []):
                 html_verm += f"<li style='margin-bottom: 4px;'>{peca}</li>"
@@ -583,7 +603,7 @@ elif menu_selecionado == "Montagens Salvas":
             st.markdown(html_verm, unsafe_allow_html=True)
             
         with col_a:
-            st.markdown("<h4 style='color: #3B82F6;'>🔵 Corte Azul</h4>", unsafe_allow_html=True)
+            st.markdown("<div class='titulo-azul'>🔵 Corte Azul</div>", unsafe_allow_html=True)
             html_azul = f'<div class="box-azul"><ul>'
             for peca in m.get('pecas_azul', []):
                 html_azul += f"<li style='margin-bottom: 4px;'>{peca}</li>"
@@ -598,7 +618,7 @@ elif menu_selecionado == "Construtor de Montagem":
     col_b1, col_b2 = st.columns(2)
     
     with col_b1:
-        st.markdown("<h4 style='color: #EF4444;'>🔴 Corte Vermelho</h4>", unsafe_allow_html=True)
+        st.markdown("<div class='titulo-vermelho'>🔴 Corte Vermelho</div>", unsafe_allow_html=True)
         peca_sel_v = st.selectbox("Catálogo Peças:", list(CATALOGO_PECAS.keys()), key="sel_verm")
         if st.button("➕ Adicionar ao Vermelho"):
             st.session_state.builder_vermelho.append({"nome": peca_sel_v, "tamanho": CATALOGO_PECAS[peca_sel_v]})
@@ -616,7 +636,7 @@ elif menu_selecionado == "Construtor de Montagem":
                 break
 
     with col_b2:
-        st.markdown("<h4 style='color: #3B82F6;'>🔵 Corte Azul</h4>", unsafe_allow_html=True)
+        st.markdown("<div class='titulo-azul'>🔵 Corte Azul</div>", unsafe_allow_html=True)
         peca_sel_a = st.selectbox("Catálogo Peças:", list(CATALOGO_PECAS.keys()), key="sel_azul")
         if st.button("➕ Adicionar ao Azul"):
             st.session_state.builder_azul.append({"nome": peca_sel_a, "tamanho": CATALOGO_PECAS[peca_sel_a]})
