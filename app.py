@@ -176,7 +176,7 @@ def calcular_corte_azul(tamanho_alvo, folga_azul):
     return passos, sobra
 
 # ==========================================
-# 3. DESIGN SYSTEM & CSS (CORREÇÃO DEFINITIVA DE IMPRESSÃO)
+# 3. DESIGN SYSTEM & CSS (AJUSTADO PARA O SELECTBOX E IMPRESSÃO)
 # ==========================================
 
 css_geral = f"""
@@ -248,20 +248,21 @@ css_geral = f"""
     }}
 
     div[data-baseweb="select"] {{
-        background-color: {'#1E1E1E' if tema_escuro else '#1E1E1E'} !important;
+        background-color: {'#1E1E1E' if tema_escuro else '#FFFFFF'} !important;
+        border: 1px solid {'#333333' if tema_escuro else '#CBD5E1'} !important;
         border-radius: 8px !important;
     }}
     div[data-baseweb="select"] * {{
-        color: #FFFFFF !important;
+        color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
         font-weight: 600 !important;
     }}
 
     div[data-baseweb="menu"], div[data-baseweb="popover"], [data-testid="stMainMenu"], [data-testid="stToolbar"] {{
-        background-color: #1E1E1E !important;
-        color: #FFFFFF !important;
+        background-color: {'#1E1E1E' if tema_escuro else '#FFFFFF'} !important;
+        color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
     }}
     div[data-baseweb="menu"] *, div[data-baseweb="popover"] *, [data-testid="stMainMenu"] * {{
-        color: #FFFFFF !important;
+        color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
     }}
 
     .stTextInput input, .stNumberInput input {{
