@@ -1,7 +1,7 @@
 # ⚙️ EasyMontage
 
 > **Sobre o Projeto:**  
-> O **EasyMontage** nasceu da iniciativa de um profissional da produção que identificou gargalos e oportunidades de otimização no processo de montagem e corte de materiais. Utilizando a tecnologia como ferramenta de transformação, o sistema foi pensado, desenhado e desenvolvido do zero para adaptar e simplificar rotinas operacionais, trazendo mais precisão matemática, velocidade e eficiência para o chão de fábrica.
+> O **EasyMontage** nasceu da iniciativa minha que ao identificar gargalos e oportunidades de otimização no processo de montagem e corte de materiais. Utilizando a tecnologia como ferramenta de transformação, o sistema foi pensado, desenhado e desenvolvido do zero para adaptar e simplificar rotinas operacionais, trazendo mais precisão matemática, velocidade e eficiência para o chão de fábrica.
 
 ---
 
