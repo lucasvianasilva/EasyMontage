@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "nome": "47.3mm",
+        "pecas_vermelho": [
+            "Borracha Vulcanizada 9mm",
+            "Peça 1mm",
+            "Borracha Vulcanizada 20mm",
+            "Peça 3mm",
+            "Peça 2mm",
+            "Peça Folga 2.3mm",
+            "Borracha Vulcanizada 9mm",
+            "Peça 1mm"
+        ],
+        "pecas_azul": [
+            "Faca 9mm",
+            "Peça 1mm",
+            "Borracha Vulcanizada 20mm",
+            "Peça 6mm",
+            "Peça Folga 2,1mm",
+            "Faca 9mm"
+        ],
+        "tamanho": 47.3
+    }
+]
