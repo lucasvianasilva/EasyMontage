@@ -176,7 +176,7 @@ def calcular_corte_azul(tamanho_alvo, folga_azul):
     return passos, sobra
 
 # ==========================================
-# 3. DESIGN SYSTEM & CSS (COM CORREÇÃO DE IMPRESSÃO)
+# 3. DESIGN SYSTEM & CSS (COM CORREÇÃO DE IMPRESSÃO ROBUSTA)
 # ==========================================
 
 css_geral = f"""
@@ -301,13 +301,17 @@ css_geral = f"""
         font-size: 18px !important;
     }}
 
-    .box-vermelha *, .box-azul * {{
-        color: {'#F3F4F6' if tema_escuro else '#1E293B'} !important;
+    .caixa-titulo {{
+        color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
         font-size: 18px !important;
+        font-weight: bold !important;
+        opacity: 1 !important;
     }}
 
-    .texto-destacado {{
+    .caixa-item {{
+        color: {'#F3F4F6' if tema_escuro else '#1E293B'} !important;
         font-size: 18px !important;
+        opacity: 1 !important;
     }}
 
     @media print {{
@@ -344,10 +348,6 @@ css_geral = f"""
         h3 {{ font-size: 12pt !important; margin: 3px 0 !important; font-weight: bold !important; color: #000000 !important; }}
         h4 {{ font-size: 12pt !important; margin: 2px 0 !important; font-weight: bold !important; color: #000000 !important; }}
         p, span, li, [data-testid="stMarkdownContainer"] p {{ font-size: 15pt !important; line-height: 1.25 !important; margin-bottom: 2px !important; color: #000000 !important; }}
-        
-        .texto-destacado {{
-            font-size: 12pt !important;
-        }}
 
         .box-vermelha, .box-azul {{
             background-color: #FFFFFF !important; 
@@ -361,17 +361,16 @@ css_geral = f"""
             page-break-inside: avoid;
         }}
         
-        .box-vermelha *, .box-azul * {{
+        .box-vermelha *, .box-azul *, 
+        .box-vermelha .caixa-titulo, .box-azul .caixa-titulo,
+        .box-vermelha .caixa-item, .box-azul .caixa-item {{
             color: #000000 !important;
             font-weight: 600 !important;
             font-size: 12pt !important;
             opacity: 1 !important;
             visibility: visible !important;
-        }}
-        
-        .box-vermelha .texto-destacado, .box-azul .texto-destacado {{
-            font-size: 12pt !important;
-            color: #000000 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
         }}
         
         div[data-testid="stHorizontalBlock"] {{ 
@@ -392,14 +391,12 @@ st.markdown(css_geral, unsafe_allow_html=True)
 def renderizar_caixa(titulo, itens, cor, destaque=False):
     if not itens: return
     classe = "box-vermelha" if cor == "vermelho" else "box-azul"
-    eh_destacado = titulo in ["Kits de Preenchimento", "Finalização"]
-    cls_texto = "texto-destacado" if eh_destacado else ""
     
-    html = f'<div class="{classe}"><strong>{titulo}</strong><br>'
+    html = f'<div class="{classe}"><strong class="caixa-titulo">{titulo}</strong><br>'
     for item in itens:
         clean = item.replace("**", "")
-        strong_tag = '<strong>'+clean+'</strong>' if destaque or '**' in item else clean
-        html += f"<span class='{cls_texto}' style='margin-left: 6px;'>&bull; {strong_tag}</span><br>"
+        strong_tag = f'<strong>{clean}</strong>' if destaque or '**' in item else clean
+        html += f"<span class='caixa-item' style='margin-left: 6px;'>&bull; {strong_tag}</span><br>"
     html += '</div>'
     st.markdown(html, unsafe_allow_html=True)
 
