@@ -68,7 +68,7 @@ if "editando_id" not in st.session_state:
 # 1. MENU LATERAL E TEMA (DEFINIDOS ANTES DO CSS)
 # ==========================================
 
-st.sidebar.markdown("<div style='font-size: 28px; font-weight: bold;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div style='font-size: 64px; font-weight: bold;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
 st.sidebar.divider()
 
 st.sidebar.title("Opções")
