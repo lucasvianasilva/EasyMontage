@@ -348,7 +348,7 @@ css_geral = f"""
         }}
 
         h2 {{ font-size: 14pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
-        h3, .titulo-vermelho, .titulo-azul {{ font-size: 13pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
+        h3, .titulo-vermelho, .titulo-azul {{ font-size: 26pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
         h4 {{ font-size: 12pt !important; margin: 2px 0 !important; font-weight: bold !important; color: #000000 !important; }}
         p, span, li, [data-testid="stMarkdownContainer"] p {{ font-size: 12pt !important; line-height: 1.25 !important; margin-bottom: 2px !important; color: #000000 !important; }}
 
