@@ -1,25 +1,143 @@
 [
     {
         "id": 1,
-        "nome": "47.3mm",
+        "nome": "Corte 47,3mm com folga de 0,20mm",
         "pecas_vermelho": [
-            "Borracha Vulcanizada 9mm",
             "Peça 1mm",
-            "Borracha Vulcanizada 20mm",
-            "Peça 3mm",
+            "Borracha 9mm",
+            "Peça 20mm",
             "Peça 2mm",
-            "Peça Folga 2.3mm",
-            "Borracha Vulcanizada 9mm",
+            "Peça 3mm",
+            "Peça 2.3mm",
+            "Borracha 9mm",
             "Peça 1mm"
         ],
         "pecas_azul": [
             "Faca 9mm",
             "Peça 1mm",
-            "Borracha Vulcanizada 20mm",
+            "Peça 20mm",
             "Peça 6mm",
-            "Peça Folga 2,1mm",
+            "Peça 2.1mm",
             "Faca 9mm"
         ],
         "tamanho": 47.3
+    },
+    {
+        "id": 2,
+        "nome": "Corte 168,3mm com folga de 0,20mm",
+        "pecas_vermelho": [
+            "Peça 1mm",
+            "Borracha 9mm",
+            "Peça 10mm",
+            "Peça 20mm",
+            "Borracha 20mm",
+            "Peça 40mm",
+            "Borracha 20mm",
+            "Peça 20mm",
+            "Peça 10mm",
+            "Peça 6mm",
+            "Peça 2.3mm",
+            "Borracha 9mm",
+            "Peça 1mm"
+        ],
+        "pecas_azul": [
+            "Faca 9mm",
+            "Peça 10mm",
+            "Peça 1mm",
+            "Peça 20mm",
+            "Borracha 20mm",
+            "Peça 40mm",
+            "Borracha 20mm",
+            "Peça 20mm",
+            "Peça 10mm",
+            "Peça 6mm",
+            "Peça 1mm",
+            "Peça 2.1mm",
+            "Faca 9mm"
+        ],
+        "tamanho": 168.3
+    },
+    {
+        "id": 3,
+        "nome": "Corte 77,3mm com folga de 0,30mm",
+        "pecas_vermelho": [
+            "Peça 1mm",
+            "Borracha 9mm",
+            "Peça 10mm",
+            "Peça 20mm",
+            "Borracha 20mm",
+            "Peça 3mm",
+            "Peça 2mm",
+            "Peça 2.3mm",
+            "Borracha 9mm",
+            "Peça 1mm"
+        ],
+        "pecas_azul": [
+            "Faca 9mm",
+            "Peça 10mm",
+            "Peça 1mm",
+            "Peça 20mm",
+            "Borracha 20mm",
+            "Peça 6mm",
+            "Peça 2mm",
+            "Faca 9mm"
+        ],
+        "tamanho": 77.3
+    },
+    {
+        "id": 4,
+        "nome": "Corte de 98,3mm com folga de 0,20mm",
+        "pecas_vermelho": [
+            "Peça 1mm",
+            "Borracha 9mm",
+            "Peça 10mm",
+            "Peça 20mm",
+            "Borracha 20mm",
+            "Peça 20mm",
+            "Peça 6mm",
+            "Peça 2.3mm",
+            "Borracha 9mm",
+            "Peça 1mm"
+        ],
+        "pecas_azul": [
+            "Faca 9mm",
+            "Peça 10mm",
+            "Peça 1mm",
+            "Peça 20mm",
+            "Borracha 20mm",
+            "Peça 20mm",
+            "Peça 6mm",
+            "Peça 1mm",
+            "Peça 2.1mm",
+            "Faca 9mm"
+        ],
+        "tamanho": 98.3
+    },
+    {
+        "id": 5,
+        "nome": "Corte de 65,3mm com folga de 0,20mm",
+        "pecas_vermelho": [
+            "Peça 1mm",
+            "Borracha 9mm",
+            "Peça 10mm",
+            "Borracha 20mm",
+            "Peça 10mm",
+            "Peça 3mm",
+            "Peça 2.3mm",
+            "Borracha 9mm",
+            "Peça 1mm"
+        ],
+        "pecas_azul": [
+            "Faca 9mm",
+            "Peça 10mm",
+            "Peça 1mm",
+            "Borracha 20mm",
+            "Peça 10mm",
+            "Peça 2mm",
+            "Peça 2mm",
+            "Peça 2.1mm",
+            "Faca 9mm"
+        ],
+        "tamanho": 65.3
     }
 ]
