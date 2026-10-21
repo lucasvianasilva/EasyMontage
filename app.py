@@ -453,9 +453,9 @@ if menu_selecionado == "Calculadora Principal":
                 unsafe_allow_html=True
             )
             if dados['entrada'] > 0:
-                st.markdown(f"<b>Rendimento Padrão:</b> {dados['qtd_cortes']} Corte(s) (Entrada: {dados['entrada']}mm)", unsafe_allow_html=True)
+                st.markdown(f"<b>Rendimento da Bobina qtd de cortes:</b> {dados['qtd_cortes']} Corte(s) (Entrada: {dados['entrada']}mm)", unsafe_allow_html=True)
             else:
-                st.markdown(f"<b>Rendimento Padrão:</b> {dados['qtd_cortes']} Corte(s)", unsafe_allow_html=True)
+                st.markdown(f"<b>Rendimento da Bobina qtd de cortes:</b> {dados['qtd_cortes']} Corte(s)", unsafe_allow_html=True)
                 
         with c_res_botoes:
             st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True)
