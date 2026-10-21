@@ -65,13 +65,13 @@ if "editando_id" not in st.session_state:
     st.session_state.editando_id = None
 
 # ==========================================
-# 1. MENU LATERAL E TEMA (DEFINIDOS ANTES DO CSS)
+# 1. MENU LATERAL E TEMA
 # ==========================================
 
-st.sidebar.markdown("<div style='font-size: 64px; font-weight: bold;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div style='font-size: 24px; font-weight: normal;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
 st.sidebar.divider()
 
-st.sidebar.title("Opções")
+st.sidebar.markdown("<h3 style='font-size: 22px; font-weight: bold;'>Opções</h3>", unsafe_allow_html=True)
 tema_escuro = st.sidebar.toggle("🌓 Trocar Modo de Visualização", value=False)
 st.sidebar.divider()
 
@@ -116,10 +116,10 @@ def calcular_corte_vermelho(tamanho_alvo):
     passos = {"etapa1": [], "etapa2": [], "etapa3_fill": [], "etapa3_end": []}
     
     if tamanho_alvo < 52.5:
-        passos["etapa1"] = ["1mm", "Borracha Vermelha 9mm", "borracha de 20mm"]
+        passos["etapa1"] = ["1mm", "Borracha Vermelha 9mm", "peça de 20mm"]
         tamanho_usado = 30.0
     else:
-        passos["etapa1"] = ["1mm", "Borracha Vermelha 9mm", "borracha de 20mm"]
+        passos["etapa1"] = ["1mm", "Borracha Vermelha 9mm", "peça de 20mm","peça de 10mm"]
         tamanho_usado = 40.0
         
     passos["etapa3_end"] = ["2.3mm", "Borracha Vermelha 9mm", "1mm"]
@@ -133,7 +133,7 @@ def calcular_corte_vermelho(tamanho_alvo):
     qtd_kits = int(espaco_disponivel // 60)
     if qtd_kits > 0:
         total_kits_mm = qtd_kits * 60
-        passos["etapa2"].append(f"**{qtd_kits}x** Kit de Preenchimento (1 Borracha Vermelha 20mm + 1 Peça 40mm) — Total: **{total_kits_mm}mm**")
+        passos["etapa2"].append(f"{qtd_kits}x Kit de Preenchimento (1 Borracha Vermelha 20mm + 1 Peça 40mm) — Total: {total_kits_mm}mm")
     tamanho_usado_total = tamanho_usado + (qtd_kits * 60)
     
     restante = round(tamanho_alvo - tamanho_usado_total - tamanho_final, 2)
@@ -155,7 +155,7 @@ def calcular_corte_azul(tamanho_alvo, folga_azul):
     pecas_folga = calcular_pecas_folga(folga_azul)
     tamanho_folga = sum(pecas_folga)
     
-    passos["etapa3_end"] = [f"{p}mm" for p in pecas_folga] + ["1mm", "Faca 9mm"]
+    passos["etapa3_end"] = [f"{p}mm" for p in pecas_folga] + ["Faca 9mm"]
     tamanho_final = 10.0 + tamanho_folga
     
     espaco_disponivel = tamanho_alvo - tamanho_usado - tamanho_final
@@ -166,7 +166,7 @@ def calcular_corte_azul(tamanho_alvo, folga_azul):
     qtd_kits = int(espaco_disponivel // 60)
     if qtd_kits > 0:
         total_kits_mm = qtd_kits * 60
-        passos["etapa2"].append(f"**{qtd_kits}x** Kit de Preenchimento (1 Borracha Azul 20mm + 1 Peça 40mm) — Total: **{total_kits_mm}mm**")
+        passos["etapa2"].append(f"{qtd_kits}x Kit de Preenchimento (1 Borracha Azul 20mm + 1 Peça 40mm) — Total: {total_kits_mm}mm")
     tamanho_usado_total = tamanho_usado + (qtd_kits * 60)
     
     restante = round(tamanho_alvo - tamanho_usado_total - tamanho_final, 2)
@@ -176,7 +176,7 @@ def calcular_corte_azul(tamanho_alvo, folga_azul):
     return passos, sobra
 
 # ==========================================
-# 3. DESIGN SYSTEM & CSS (CORRIGIDO PARA SELECTBOX E IMPRESSÃO)
+# 3. DESIGN SYSTEM & CSS (COM SUPORTE A IMPRESSÃO A4)
 # ==========================================
 
 css_geral = f"""
@@ -201,20 +201,17 @@ css_geral = f"""
     [data-testid="stSidebar"] .stRadio label {{
         color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
         font-size: 18px !important;
+        font-weight: normal !important;
     }}
 
-    [data-testid="stSidebar"] [data-testid="stToggle"] {{
-        display: flex !important;
-        align-items: center !important;
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
+    [data-testid="stSidebar"] .stRadio > label {{
+        font-weight: bold !important;
     }}
-    
+
     [data-testid="stSidebar"] [data-testid="stToggle"] p,
     [data-testid="stSidebar"] [data-testid="stToggle"] span {{
         color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
-        font-weight: 600 !important;
+        font-weight: normal !important;
         white-space: nowrap !important;
         margin-bottom: 0 !important;
     }}
@@ -222,93 +219,95 @@ css_geral = f"""
     p, span, label, .stMarkdown p, .stMarkdown span, .stMarkdown li {{
         color: {'#F3F4F6' if tema_escuro else '#0F172A'} !important;
         font-size: 18px !important;
+        font-weight: normal !important;
     }}
 
     h2 {{ font-size: 28px !important; font-weight: bold !important; color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important; }}
-    h3 {{ font-size: 26px !important; font-weight: bold !important; color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important; }}
-    h4 {{ font-size: 20px !important; font-weight: bold !important; color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important; }}
+    h3 {{ font-size: 24px !important; font-weight: bold !important; color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important; }}
+
+    .stTextInput input, .stNumberInput input, div[data-baseweb="input"] {{
+        background-color: {'#2A2A2A' if tema_escuro else '#FFFFFF'} !important;
+        color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
+        font-size: 18px !important;
+        border-color: {'#444444' if tema_escuro else '#CBD5E1'} !important;
+    }}
+
+    button, 
+    .stButton > button, 
+    [data-testid="stFormSubmitButton"] > button,
+    button[kind="primaryFormSubmit"],
+    button[kind="secondaryFormSubmit"] {{
+        background-color: {'#1E293B' if tema_escuro else '#2563EB'} !important;
+        color: #FFFFFF !important;
+        border-radius: 8px !important;
+        border: none !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+    }}
+
+    button *, 
+    .stButton > button *, 
+    [data-testid="stFormSubmitButton"] button *,
+    button[kind="primaryFormSubmit"] * {{
+        color: #FFFFFF !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+    }}
+
+    button:hover, .stButton > button:hover, [data-testid="stFormSubmitButton"] button:hover {{
+        background-color: {'#334155' if tema_escuro else '#1D4ED8'} !important;
+        color: #FFFFFF !important;
+    }}
 
     .titulo-vermelho {{
         color: {'#F87171' if tema_escuro else '#EF4444'} !important;
-        font-size: 26px !important;
+        font-size: 22px !important;
         font-weight: bold !important;
     }}
 
     .titulo-azul {{
         color: {'#60A5FA' if tema_escuro else '#3B82F6'} !important;
-        font-size: 26px !important;
+        font-size: 22px !important;
         font-weight: bold !important;
-    }}
-
-    [data-testid="stVerticalBlockBorderWrapper"], [data-testid="stForm"] {{
-        border: none !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-    }}
-
-    .stTextInput input, .stNumberInput input {{
-        background-color: {'#2A2A2A' if tema_escuro else '#FFFFFF'} !important;
-        color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
-        font-size: 18px !important;
-        font-weight: 600 !important;
-    }}
-
-    button, .stButton > button, div[data-testid="stNumberInput"] button {{
-        background-color: {'#1E293B' if tema_escuro else '#2563EB'} !important;
-        color: #FFFFFF !important;
-        font-size: 18px !important;
-        font-weight: bold !important;
-        border-radius: 8px !important;
-        border: none !important;
-    }}
-
-    button p, .stButton > button p, div[data-testid="stNumberInput"] button p {{
-        color: #FFFFFF !important;
-        font-size: 18px !important;
-        font-weight: bold !important;
-    }}
-
-    button:hover, .stButton > button:hover {{
-        background-color: {'#334155' if tema_escuro else '#1D4ED8'} !important;
-        color: #FFFFFF !important;
     }}
 
     .box-vermelha {{
         background-color: {'#1E1E1E' if tema_escuro else '#FFFFFF'} !important;
         border: 1px solid {'#451A03' if tema_escuro else '#FECACA'} !important;
         border-left: 6px solid #EF4444 !important;
-        padding: 18px !important; 
+        padding: 14px !important; 
         border-radius: 10px !important; 
-        margin-top: 12px;
+        margin-top: 8px;
+        margin-bottom: 8px;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
-        font-size: 18px !important;
+        font-size: 16px !important;
     }}
     
     .box-azul {{
         background-color: {'#1E1E1E' if tema_escuro else '#FFFFFF'} !important;
         border: 1px solid {'#1E3A8A' if tema_escuro else '#BFDBFE'} !important;
         border-left: 6px solid #3B82F6 !important;
-        padding: 18px !important; 
+        padding: 14px !important; 
         border-radius: 10px !important; 
-        margin-top: 12px;
+        margin-top: 8px;
+        margin-bottom: 8px;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
-        font-size: 18px !important;
+        font-size: 16px !important;
     }}
 
     .caixa-titulo {{
         color: {'#FFFFFF' if tema_escuro else '#0F172A'} !important;
-        font-size: 18px !important;
+        font-size: 16px !important;
         font-weight: bold !important;
-        opacity: 1 !important;
     }}
 
     .caixa-item {{
         color: {'#F3F4F6' if tema_escuro else '#1E293B'} !important;
-        font-size: 18px !important;
-        opacity: 1 !important;
+        font-size: 15px !important;
+        font-weight: normal !important;
     }}
 
+    /* CONFIGURAÇÃO DE IMPRESSÃO PARA CABER EM 1 PÁGINA A4 */
     @media print {{
         header, footer, [data-testid="stSidebar"], .stToggle, button, 
         .stButton, [data-testid="stForm"], hr, .nao-imprimir {{ 
@@ -317,47 +316,38 @@ css_geral = f"""
         
         @page {{ 
             size: A4 portrait; 
-            margin: 6mm !important; 
-        }}
-        
-        *, html, body, [data-testid="stAppViewContainer"], .main, div, p, span, label, h1, h2, h3, h4, h5, h6, strong, em, li, .stMarkdown, .stText, [data-testid="stMarkdownContainer"] {{
-            background-color: #FFFFFF !important; 
-            color: #000000 !important;
-            -webkit-print-color-adjust: unset !important;
-            print-color-adjust: unset !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            text-shadow: none !important;
-            filter: none !important;
+            margin: 8mm !important; 
         }}
         
         html, body, [data-testid="stAppViewContainer"], .main {{
-            font-size: 12pt !important;
-            height: auto !important;
-            overflow: visible !important;
+            background-color: #FFFFFF !important; 
+            color: #000000 !important;
+            font-size: 11pt !important;
             padding: 0 !important;
             margin: 0 !important;
+            height: auto !important;
+            overflow: visible !important;
         }}
 
-        h2, h3, h4, .titulo-vermelho, .titulo-azul {{
+        h2, h3, .titulo-vermelho, .titulo-azul {{
             color: #000000 !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            -webkit-print-color-adjust: unset !important;
-            print-color-adjust: unset !important;
+            font-size: 13pt !important;
+            margin: 2px 0 !important;
         }}
 
-        h2 {{ font-size: 14pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
-        h3, .titulo-vermelho, .titulo-azul {{ font-size: 13pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
-        h4 {{ font-size: 12pt !important; margin: 2px 0 !important; font-weight: bold !important; color: #000000 !important; }}
-        p, span, li, [data-testid="stMarkdownContainer"] p {{ font-size: 12pt !important; line-height: 1.25 !important; margin-bottom: 2px !important; color: #000000 !important; }}
+        p, span, label, [data-testid="stMarkdownContainer"] p {{
+            color: #000000 !important;
+            font-size: 10pt !important;
+            line-height: 1.2 !important;
+            margin-bottom: 2px !important;
+        }}
 
         .box-vermelha, .box-azul {{
             background-color: #FFFFFF !important; 
             border: 1px solid #000000 !important;
-            border-left: 5px solid #000000 !important; 
+            border-left: 4px solid #000000 !important; 
             box-shadow: none !important;
-            padding: 6px 10px !important; 
+            padding: 6px 8px !important; 
             margin-top: 4px !important;
             margin-bottom: 4px !important;
             break-inside: avoid;
@@ -368,18 +358,13 @@ css_geral = f"""
         .box-vermelha .caixa-titulo, .box-azul .caixa-titulo,
         .box-vermelha .caixa-item, .box-azul .caixa-item {{
             color: #000000 !important;
-            font-weight: 600 !important;
-            font-size: 11pt !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            -webkit-print-color-adjust: unset !important;
-            print-color-adjust: unset !important;
+            font-size: 10pt !important;
         }}
         
         div[data-testid="stHorizontalBlock"] {{ 
             display: flex !important; 
             width: 100% !important; 
-            gap: 12px !important;
+            gap: 10px !important;
         }}
         
         div[data-testid="column"] {{ 
@@ -391,15 +376,14 @@ css_geral = f"""
 """
 st.markdown(css_geral, unsafe_allow_html=True)
 
-def renderizar_caixa(titulo, itens, cor, destaque=False):
+def renderizar_caixa(titulo, itens, cor):
     if not itens: return
     classe = "box-vermelha" if cor == "vermelho" else "box-azul"
     
     html = f'<div class="{classe}"><strong class="caixa-titulo">{titulo}</strong><br>'
     for item in itens:
-        clean = item.replace("**", "")
-        strong_tag = f'<strong>{clean}</strong>' if destaque or '**' in item else clean
-        html += f"<span class='caixa-item' style='margin-left: 6px;'>&bull; {strong_tag}</span><br>"
+        clean_item = item.replace("**", "")
+        html += f"<span class='caixa-item' style='margin-left: 6px;'>&bull; {clean_item}</span><br>"
     html += '</div>'
     st.markdown(html, unsafe_allow_html=True)
 
@@ -417,11 +401,10 @@ CATALOGO_PECAS = {
 # 4. MÁQUINA DE ESTADOS E RENDERIZAÇÃO
 # ==========================================
 
-# ----------------- TELA 1: CALCULADORA -----------------
 if menu_selecionado == "Calculadora Principal":
     
     if st.session_state.tela_atual == "formulario":
-        st.markdown("<div style='font-size: 64px; font-weight: bold; text-align: center;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size: 48px; font-weight: normal; text-align: center;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
         st.markdown("<p style='text-align: center; font-size: 1.2rem;'>Sistema Avançado de Preenchimento de Peças</p>", unsafe_allow_html=True)
         
         col_espaco1, col_centro, col_espaco2 = st.columns([1, 2, 1])
@@ -435,7 +418,7 @@ if menu_selecionado == "Calculadora Principal":
                 qtd_cortes_calc = 1
                 if tamanho_entrada > 0 and tamanho_montagem > 0:
                     qtd_cortes_calc = max(1, math.floor(tamanho_entrada / tamanho_montagem))
-                    st.info(f"💡 **Quantidade de Cortes calculada:** {qtd_cortes_calc} corte(s) inteiros cabem na entrada.")
+                    st.info(f"💡 Quantidade de Cortes calculada: {qtd_cortes_calc} corte(s) inteiros cabem na entrada.")
                 
                 espessura_material = st.number_input("3. Espessura do Material (mm):", min_value=0.0, value=1.00, step=0.01, format="%.2f")
                 folga_azul = st.number_input("4. Folga Corte Azul (mm):", min_value=0.0, value=0.28, step=0.01)
@@ -463,11 +446,16 @@ if menu_selecionado == "Calculadora Principal":
         with c_res_titulo:
             st.markdown("<h2>Relatório de Montagem Calculada</h2>", unsafe_allow_html=True)
             espessura_fmt = f"{dados['espessura']:.2f}"
-            st.write(f"**Tamanho Alvo:** {dados['tamanho']}mm | **Folga Azul:** {dados['folga_azul']}mm | **Material:** {espessura_fmt}mm")
+            st.markdown(
+                f"<b>Tamanho Alvo:</b> {dados['tamanho']}mm | "
+                f"<b>Folga Azul:</b> {dados['folga_azul']}mm | "
+                f"<b>Material:</b> {espessura_fmt}mm", 
+                unsafe_allow_html=True
+            )
             if dados['entrada'] > 0:
-                st.write(f"**Entrada Informada:** {dados['entrada']}mm ➔ Rendimento: **{dados['qtd_cortes']} Corte(s)**")
+                st.markdown(f"<b>Rendimento Padrão:</b> {dados['qtd_cortes']} Corte(s) (Entrada: {dados['entrada']}mm)", unsafe_allow_html=True)
             else:
-                st.write(f"**Rendimento Padrão:** {dados['qtd_cortes']} Corte(s)")
+                st.markdown(f"<b>Rendimento Padrão:</b> {dados['qtd_cortes']} Corte(s)", unsafe_allow_html=True)
                 
         with c_res_botoes:
             st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True)
@@ -494,7 +482,7 @@ if menu_selecionado == "Calculadora Principal":
                 renderizar_caixa("Jogo Inicial", res_vermelho['etapa1'], "vermelho")
                 renderizar_caixa("Kits de Preenchimento", res_vermelho['etapa2'], "vermelho")
                 renderizar_caixa("Peças menores", res_vermelho['etapa3_fill'], "vermelho")
-                renderizar_caixa("Finalização", res_vermelho['etapa3_end'], "vermelho", destaque=True)
+                renderizar_caixa("Finalização", res_vermelho['etapa3_end'], "vermelho")
                 if sobra_verm > 0:
                     st.warning(f"Sobra isolada de {sobra_verm}mm ")
 
@@ -503,14 +491,13 @@ if menu_selecionado == "Calculadora Principal":
                 renderizar_caixa("Jogo Inicial", res_azul['etapa1'], "azul")
                 renderizar_caixa("Kits de Preenchimento", res_azul['etapa2'], "azul")
                 renderizar_caixa("Peças menores", res_azul['etapa3_fill'], "azul")
-                renderizar_caixa("Finalização", res_azul['etapa3_end'], "azul", destaque=True)
+                renderizar_caixa("Finalização", res_azul['etapa3_end'], "azul")
                 if sobra_azul > 0:
                     st.warning(f"Sobra isolada de {sobra_azul}mm")
 
         except Exception as e:
-            st.error(f"**Falha no Processamento Matemático:** {str(e)}")
+            st.error(f"Falha no Processamento Matemático: {str(e)}")
 
-# ----------------- TELA 2: VISUALIZAR SALVAS (COM CRUD) -----------------
 elif menu_selecionado == "Montagens Salvas":
     st.markdown("<h3 style='text-align: center;'>📦 Banco de Montagens Pequenas</h3>", unsafe_allow_html=True)
     
@@ -522,7 +509,7 @@ elif menu_selecionado == "Montagens Salvas":
             cols = st.columns(4)
             for idx, m in enumerate(montagens):
                 with cols[idx % 4]:
-                    st.markdown(f"**{m['nome']}**")
+                    st.markdown(f"<b>{m['nome']}</b>", unsafe_allow_html=True)
                     st.markdown(f"📏 {m['tamanho']}mm")
                     if st.button("🔍 Visualizar", key=f"card_{m['id']}", use_container_width=True):
                         st.session_state.montagem_selecionada = m
@@ -556,7 +543,7 @@ elif menu_selecionado == "Montagens Salvas":
                 st.session_state.editando_id = m['id']
                 st.rerun()
 
-        st.markdown(f"**Tamanho Fixo / Referência:** {m['tamanho']}mm")
+        st.markdown(f"<b>Tamanho Fixo / Referência:</b> {m['tamanho']}mm", unsafe_allow_html=True)
         
         c_btn1, c_btn2, c_btn3, c_btn_empty = st.columns([1, 1, 1, 2])
         with c_btn1:
@@ -581,7 +568,7 @@ elif menu_selecionado == "Montagens Salvas":
             st.markdown("<div class='titulo-vermelho'>🔴 Corte Vermelho</div>", unsafe_allow_html=True)
             html_verm = f'<div class="box-vermelha"><ul>'
             for peca in m.get('pecas_vermelho', []):
-                html_verm += f"<li style='margin-bottom: 4px;'>{peca}</li>"
+                html_verm += f"<li style='margin-bottom: 4px;' class='caixa-item'>{peca}</li>"
             html_verm += "</ul></div>"
             st.markdown(html_verm, unsafe_allow_html=True)
             
@@ -589,14 +576,13 @@ elif menu_selecionado == "Montagens Salvas":
             st.markdown("<div class='titulo-azul'>🔵 Corte Azul</div>", unsafe_allow_html=True)
             html_azul = f'<div class="box-azul"><ul>'
             for peca in m.get('pecas_azul', []):
-                html_azul += f"<li style='margin-bottom: 4px;'>{peca}</li>"
+                html_azul += f"<li style='margin-bottom: 4px;' class='caixa-item'>{peca}</li>"
             html_azul += "</ul></div>"
             st.markdown(html_azul, unsafe_allow_html=True)
 
-# ----------------- TELA 3: CONSTRUTOR DE MONTAGEM -----------------
 elif menu_selecionado == "Construtor de Montagem":
     st.markdown("<h3 style='text-align: center;'>🛠️ Adicione uma Nova Montagem</h3>", unsafe_allow_html=True)
-    st.info("Adicione peças para **ambos** os cortes (Vermelho e Azul) para habilitar o salvamento da montagem.")
+    st.info("Adicione peças para ambos os cortes (Vermelho e Azul) para habilitar o salvamento da montagem.")
     
     col_b1, col_b2 = st.columns(2)
     
@@ -608,7 +594,7 @@ elif menu_selecionado == "Construtor de Montagem":
             st.rerun()
             
         soma_v = sum(p["tamanho"] for p in st.session_state.builder_vermelho)
-        st.write(f"Subtotal Vermelho: **{soma_v:.2f}mm**")
+        st.markdown(f"<b>Subtotal Vermelho:</b> {soma_v:.2f}mm", unsafe_allow_html=True)
         
         for i, p in enumerate(st.session_state.builder_vermelho):
             col_item, col_del = st.columns([4, 1])
@@ -626,7 +612,7 @@ elif menu_selecionado == "Construtor de Montagem":
             st.rerun()
             
         soma_a = sum(p["tamanho"] for p in st.session_state.builder_azul)
-        st.write(f"Subtotal Azul: **{soma_a:.2f}mm**")
+        st.markdown(f"<b>Subtotal Azul:</b> {soma_a:.2f}mm", unsafe_allow_html=True)
         
         for i, p in enumerate(st.session_state.builder_azul):
             col_item, col_del = st.columns([4, 1])
@@ -659,7 +645,7 @@ elif menu_selecionado == "Construtor de Montagem":
                 st.session_state.builder_azul = []
                 st.success("Montagem salva com sucesso! Acesse 'Montagens Salvas' para conferir.")
     else:
-        st.warning("⚠️ Adicione pelo menos uma peça no **Corte Vermelho** e uma peça no **Corte Azul** para liberar o botão de salvamento.")
+        st.warning("⚠️ Adicione pelo menos uma peça no Corte Vermelho e uma peça no Corte Azul para liberar o botão de salvamento.")
 
 # Rodapé Global
 st.markdown("<br><hr><div class='nao-imprimir' style='text-align: center; color: #7F8C8D; font-size: 12px;'>Desenvolvido por Lucas Viana</div>", unsafe_allow_html=True)
