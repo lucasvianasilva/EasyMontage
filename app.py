@@ -68,7 +68,7 @@ if "editando_id" not in st.session_state:
 # 1. MENU LATERAL E TEMA (DEFINIDOS ANTES DO CSS)
 # ==========================================
 
-st.sidebar.markdown("<div style='font-size: 32px; font-weight: bold;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div style='font-size: 64px; font-weight: bold;'>⚙️ EasyMontage</div>", unsafe_allow_html=True)
 st.sidebar.divider()
 
 st.sidebar.title("Opções")
@@ -116,10 +116,10 @@ def calcular_corte_vermelho(tamanho_alvo):
     passos = {"etapa1": [], "etapa2": [], "etapa3_fill": [], "etapa3_end": []}
     
     if tamanho_alvo < 52.5:
-        passos["etapa1"] = ["Borracha Vermelha 9mm", "1mm", "borracha de 20mm"]
+        passos["etapa1"] = ["1mm", "Borracha Vermelha 9mm", "borracha de 20mm"]
         tamanho_usado = 30.0
     else:
-        passos["etapa1"] = ["Borracha Vermelha 9mm", "10mm", "1mm", "20mm"]
+        passos["etapa1"] = ["1mm", "Borracha Vermelha 9mm", "borracha de 20mm"]
         tamanho_usado = 40.0
         
     passos["etapa3_end"] = ["2.3mm", "Borracha Vermelha 9mm", "1mm"]
@@ -146,7 +146,7 @@ def calcular_corte_azul(tamanho_alvo, folga_azul):
     passos = {"etapa1": [], "etapa2": [], "etapa3_fill": [], "etapa3_end": []}
     
     if tamanho_alvo < 52.5:
-        passos["etapa1"] = ["Faca 9mm", "1mm", "borracha de 20mm"]
+        passos["etapa1"] = ["Faca 9mm", "1mm", "20mm"]
         tamanho_usado = 30.0
     else:
         passos["etapa1"] = ["Faca 9mm", "10mm", "1mm", "20mm"]
@@ -348,7 +348,7 @@ css_geral = f"""
         }}
 
         h2 {{ font-size: 14pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
-        h3, .titulo-vermelho, .titulo-azul {{ font-size: 26pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
+        h3, .titulo-vermelho, .titulo-azul {{ font-size: 13pt !important; margin: 4px 0 !important; font-weight: bold !important; color: #000000 !important; }}
         h4 {{ font-size: 12pt !important; margin: 2px 0 !important; font-weight: bold !important; color: #000000 !important; }}
         p, span, li, [data-testid="stMarkdownContainer"] p {{ font-size: 12pt !important; line-height: 1.25 !important; margin-bottom: 2px !important; color: #000000 !important; }}
 
